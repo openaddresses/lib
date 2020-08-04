@@ -1,0 +1,11 @@
+{
+  "name": "oa",
+  "version": "1.0.0",
+  "main": "cli.js",
+  "repository": "git@github.com:openaddresses/lib",
+  "author": "ingalls <nick@ingalls.ca>",
+  "license": "MIT",
+  "dependencies": {
+    "prompt": "^1.0.0"
+  }
+}
