@@ -3,7 +3,6 @@
 'use strict';
 
 const prompt = require('prompt');
-const auth = require('./util/get_auth');
 const settings = require('./package.json');
 
 /**
@@ -29,7 +28,7 @@ class OA {
     }
 }
 
-module.exports = OpenAddresses;
+module.exports = OA;
 
 // Run in CLI mode
 if (require.main === module) {
