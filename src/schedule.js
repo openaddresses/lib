@@ -64,17 +64,17 @@ class Schedule {
             });
 
             let args = [{
-                name: 'event',
+                name: 'type',
                 message: 'type of event to fire',
                 required: true,
                 type: 'string',
-                default: options.event
+                default: options.type
             }];
 
             prompt.get(args, (err, argv) => {
                 prompt.stop();
 
-                options.event = argv.event;
+                options.type = argv.type;
 
                 return main();
             });
@@ -89,7 +89,7 @@ class Schedule {
          * @returns {undefined}
          */
         function main() {
-            if (!options.event) return cb(new Error('options.event required'));
+            if (!options.type) return cb(new Error('options.type required'));
 
             let url = new URL(`/api/schedule`, self.api.url);
 
@@ -101,7 +101,7 @@ class Schedule {
                 },
                 json: true,
                 body: {
-                    event: options.event
+                    type: options.type
                 }
             };
 
@@ -109,7 +109,7 @@ class Schedule {
                 if (err) return cb(err);
                 if (res.statusCode !== 200) return cb(new Error(JSON.stringify(res.body)));
 
-                return cb(res.body);
+                return cb(null, res.body);
             });
         }
 
