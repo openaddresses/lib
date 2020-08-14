@@ -10,6 +10,10 @@
 
 ## Version History
 
+### v1.0.1
+
+- :tada: Add support for `/api/schedule`
+
 ### v0.0.1
 
 - :rocket: Initial Frameworking
