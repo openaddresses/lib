@@ -6,6 +6,7 @@
   "author": "ingalls <nick@ingalls.ca>",
   "license": "MIT",
   "dependencies": {
-    "prompt": "^1.0.0"
+    "prompt": "^1.0.0",
+    "request": "^2.88.2"
   }
 }

@@ -24,7 +24,9 @@ class OA {
         };
 
         // Instantiate New Library Instances
-        this._.auth = new (require('./lib/auth'))(this);
+        this._ = {
+            schedule: new (require('./src/schedule'))(this)
+        };
     }
 }
 
@@ -66,12 +68,12 @@ if (require.main === module) {
         const command = argv._[2];
         const subcommand = argv._[3];
 
-        if (command && !hecate._[command]) {
+        if (command && !oa._[command]) {
             console.error();
             console.error(`"${command}" command not found!`);
             console.error();
             process.exit(1);
-        } else if (command && subcommand && !hecate._[command][subcommand]) {
+        } else if (command && subcommand && !oa._[command][subcommand]) {
             console.error();
             console.error(`"${command} ${subcommand}" command not found!`);
             console.error();
