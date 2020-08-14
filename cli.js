@@ -20,7 +20,8 @@ class OA {
         this.user = {
             username: api.username ? api.username : process.env.OA_USERNAME,
             password: api.password ? api.password : process.env.OA_PASSWORD,
-            token: api.token ? api.token : process.env.OA_TOKEN
+            token: api.token ? api.token : process.env.OA_TOKEN,
+            secret: api.secret ? api.secret : process.env.OA_SECRET
         };
 
         // Instantiate New Library Instances
@@ -98,6 +99,8 @@ if (require.main === module) {
                 if (err) throw err;
                 oa.url = new URL(res.url).toString();
                 argv.cli = true;
+
+                return run();
             });
         } else {
             return run();

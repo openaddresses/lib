@@ -74,13 +74,6 @@ class Schedule {
             prompt.get(args, (err, argv) => {
                 prompt.stop();
 
-                if (argv.hecate_username) {
-                    self.api.user = {
-                        username: argv.oa_username,
-                        password: argv.oa_password
-                    };
-                }
-
                 options.event = argv.event;
 
                 return main();
@@ -100,15 +93,19 @@ class Schedule {
 
             let url = new URL(`/api/schedule`, self.api.url);
 
-            request({
+            const params = {
                 method: 'POST',
                 url: url,
-                auth: self.api.user,
+                headers: {
+                    'shared-secret': self.api.user.secret
+                },
                 json: true,
                 body: {
                     event: options.event
                 }
-            }, (err, res) => {
+            };
+
+            request(params, (err, res) => {
                 if (err) return cb(err);
                 if (res.statusCode !== 200) return cb(new Error(JSON.stringify(res.body)));
 
