@@ -2,6 +2,7 @@
 
 'use strict';
 
+const {auth} = require('./util');
 const request = require('request');
 const prompt = require('prompt');
 
@@ -93,17 +94,14 @@ class Schedule {
 
             let url = new URL(`/api/schedule`, self.api.url);
 
-            const params = {
+            const params = auth({
                 method: 'POST',
                 url: url,
-                headers: {
-                    'shared-secret': self.api.user.secret
-                },
                 json: true,
                 body: {
                     type: options.type
                 }
-            };
+            }, self.api.user);
 
             request(params, (err, res) => {
                 if (err) return cb(err);
@@ -124,8 +122,12 @@ class Schedule {
          * @returns {undefined}
          */
         function cli(err, body) {
-            if (err) throw err;
-            console.error(JSON.stringify(body, null, 4));
+            if (err) {
+                console.error(err.message)
+                process.exit(1);
+            } else {
+                console.log(JSON.stringify(body, null, 4));
+            }
         }
     }
 }
