@@ -49,16 +49,16 @@ if (require.main === module) {
         process.exit(0);
     } else if (!argv._[2] || (!argv._[2] && argv.help) || argv._[2] === 'help') {
         console.error('');
-        console.error('usage: cli.js <command> [--version] [--help]');
-        console.error('');
-        console.error('note: the --script flag can be applied to any mode to disable prompts');
-        console.error('      when used the user is responsible for making sure they have all the');
-        console.error('      correct flags');
+        console.error('usage: cli.js <command> [--raw] [--script] [--version] [--help]');
         console.error('');
         console.error('<command>');
+        console.error('    analytics                   Analytic API');
+        console.error('    schedule                    Schedule API');
         console.error('    help                        Displays this message');
         console.error('');
         console.error('<options>');
+        console.error('    --raw                       Print the raw JSON responses when using the CLI');
+        console.error('    --script                    Disable prompts when using the CLI');
         console.error('    --version                   Print the current version of the CLI');
         console.error('    --help                      Print a help message');
         console.error();
