@@ -10,6 +10,12 @@
 
 ## Version History
 
+### v1.1.0
+
+- :tada: Add support for `/api/dash/traffic`
+- :tada: Add support for `/api/dash/collections`
+- :rocket: Add centralized request auth manager
+
 ### v1.0.1
 
 - :tada: Add support for `/api/schedule`
