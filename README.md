@@ -4,7 +4,7 @@
 
 ## General Usage
 
-### Installation
+<h3 align=center>Installation</h3>
 
 **JS Library**
 
