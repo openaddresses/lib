@@ -41,93 +41,74 @@ class Schedule {
      * @param {!Object} options Options for making a request
      * @param {string} [options.event] Type of event to fire
      *
-     * @param {function} cb (err, res) style callback function
-     *
-     * @return {function} (err, res) style callback
+     * @return {Promise}
      */
-    fire(options = {}, cb) {
+    fire(options = {}) {
         const self = this;
 
         if (!options) options = {};
 
         if (options.script) {
-            cb = cli;
-
             options.output = process.stdout;
 
-            return main();
+            await main();
         } else if (options.cli) {
-            cb = cli;
-
             prompt.message = '$';
             prompt.start({
                 stdout: process.stderr
             });
 
-            let args = [{
+
+            await prompt.get([{
                 name: 'type',
                 message: 'type of event to fire',
                 required: true,
                 type: 'string',
                 default: options.type
-            }];
+            }]);
+            prompt.stop();
 
-            prompt.get(args, (err, argv) => {
-                prompt.stop();
+            options.type = argv.type;
 
-                options.type = argv.type;
-
-                return main();
-            });
+            try {
+                const body = await main();
+                console.log(JSON.stringify(body, null, 4));
+            } catch (err) {
+                console.error(err.message)
+                process.exit(1);
+            }
         } else {
-            return main();
+            await main();
         }
 
         /**
          * Once the options object is populated, make the API request
          * @private
          *
-         * @returns {undefined}
+         * @returns {Promise}
          */
         function main() {
-            if (!options.type) return cb(new Error('options.type required'));
+            return new Promise((resolve, reject) => {
+                if (!options.type) return cb(new Error('options.type required'));
 
-            let url = new URL(`/api/schedule`, self.api.url);
+                let url = new URL(`/api/schedule`, self.api.url);
 
-            const params = auth({
-                method: 'POST',
-                url: url,
-                json: true,
-                body: {
-                    type: options.type
-                }
-            }, self.api.user);
+                const params = auth({
+                    method: 'POST',
+                    url: url,
+                    json: true,
+                    body: {
+                        type: options.type
+                    }
+                }, self.api.user);
 
-            request(params, (err, res) => {
-                if (err) return cb(err);
-                if (res.statusCode !== 200) return cb(new Error(JSON.stringify(res.body)));
+                request(params, (err, res) => {
+                    if (err) return reject(err);
+                    if (res.statusCode !== 200) return reject(new Error(JSON.stringify(res.body)));
 
-                return cb(null, res.body);
+                    return resolve(res.body);
+                });
             });
-        }
-
-        /**
-         * If in CLI mode, write results to stdout
-         * or throw any errors incurred
-         *
-         * @private
-         *
-         * @param {Error} err [optional] API Error
-         *
-         * @returns {undefined}
-         */
-        function cli(err, body) {
-            if (err) {
-                console.error(err.message)
-                process.exit(1);
-            } else {
-                console.log(JSON.stringify(body, null, 4));
-            }
         }
     }
 }
