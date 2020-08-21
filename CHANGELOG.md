@@ -10,6 +10,10 @@
 
 ## Version History
 
+### v1.1.1
+
+- :rocket: move to `inquirer` for better async prompt support
+
 ### v1.1.0
 
 - :tada: Add support for `/api/dash/traffic`
