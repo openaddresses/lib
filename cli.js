@@ -2,7 +2,7 @@
 
 'use strict';
 
-const prompt = require('prompt');
+const inquire = require('inquirer');
 const settings = require('./package.json');
 
 /**
@@ -16,7 +16,7 @@ class OA {
      * @param {string} api.password OpenAddresses Password
      */
     constructor(api = {}) {
-        this.url = api.url ? new URL(api.url).toString() : 'http://localhost:5000';
+        this.url = api.url ? new URL(api.url).toString() : 'http://batch.openaddresses.io';
         this.user = {
             username: api.username ? api.username : process.env.OA_USERNAME,
             password: api.password ? api.password : process.env.OA_PASSWORD,
@@ -65,7 +65,7 @@ if (require.main === module) {
         process.exit(0);
     }
 
-    const command = (err, oa) => {
+    const command = async (err, oa) => {
         if (err) throw err;
         const command = argv._[2];
         const subcommand = argv._[3];
@@ -85,24 +85,19 @@ if (require.main === module) {
         }
 
         if (!argv.script) {
-            prompt.message = '$';
-            prompt.start({
-                stdout: process.stderr
-            });
-
-            prompt.get([{
+            const res = await inquire.prompt([{
                 name: 'url',
                 message: 'URL to connect to local or remote OA instance. Be sure to include the protocol and port number for local instances, e.g. \'http://localhost:8000\'',
                 type: 'string',
                 required: 'true',
                 default: oa.url
-            }], (err, res) => {
-                if (err) throw err;
-                oa.url = new URL(res.url).toString();
-                argv.cli = true;
+            }])
 
-                return run();
-            });
+            if (err) throw err;
+            oa.url = new URL(res.url).toString();
+            argv.cli = true;
+
+            return run();
         } else {
             return run();
         }

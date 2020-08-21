@@ -5,7 +5,6 @@
 const chart = require('asciichart');
 const {auth} = require('./util');
 const request = require('request');
-const prompt = require('prompt');
 
 /**
  * @class Analytics

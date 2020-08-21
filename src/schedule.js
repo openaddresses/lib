@@ -4,7 +4,7 @@
 
 const {auth} = require('./util');
 const request = require('request');
-const prompt = require('prompt');
+const inquire = require('inquirer');
 
 /**
  * @class Schedule
@@ -43,7 +43,7 @@ class Schedule {
      *
      * @return {Promise}
      */
-    fire(options = {}) {
+    async fire(options = {}) {
         const self = this;
 
         if (!options) options = {};
@@ -53,20 +53,13 @@ class Schedule {
 
             await main();
         } else if (options.cli) {
-            prompt.message = '$';
-            prompt.start({
-                stdout: process.stderr
-            });
-
-
-            await prompt.get([{
+            const argv = await inquire.prompt([{
                 name: 'type',
                 message: 'type of event to fire',
                 required: true,
                 type: 'string',
                 default: options.type
             }]);
-            prompt.stop();
 
             options.type = argv.type;
 
