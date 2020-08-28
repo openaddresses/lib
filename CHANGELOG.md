@@ -10,6 +10,10 @@
 
 ## Version History
 
+### v1.2.0
+
+- :data: Add support for `/data` and `/data/:data`
+
 ### v1.1.1
 
 - :rocket: move to `inquirer` for better async prompt support
