@@ -27,7 +27,8 @@ class OA {
         // Instantiate New Library Instances
         this._ = {
             schedule: new (require('./src/schedule'))(this),
-            analytics: new (require('./src/analytics'))(this)
+            analytics: new (require('./src/analytics'))(this),
+            data: new (require('./src/data'))(this)
         };
     }
 }

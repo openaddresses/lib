@@ -82,7 +82,7 @@ class Schedule {
          */
         function main() {
             return new Promise((resolve, reject) => {
-                if (!options.type) return cb(new Error('options.type required'));
+                if (!options.type) return reject(new Error('options.type required'));
 
                 let url = new URL(`/api/schedule`, self.api.url);
 
