@@ -16,7 +16,7 @@ class OA {
      * @param {string} api.password OpenAddresses Password
      */
     constructor(api = {}) {
-        this.url = api.url ? new URL(api.url).toString() : 'http://batch.openaddresses.io';
+        this.url = api.url ? new URL(api.url).toString() : 'https://batch.openaddresses.io';
         this.user = {
             username: api.username ? api.username : process.env.OA_USERNAME,
             password: api.password ? api.password : process.env.OA_PASSWORD,
