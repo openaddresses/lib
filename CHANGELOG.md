@@ -10,9 +10,13 @@
 
 ## Version History
 
+### v1.3.0
+
+- :tada: Add support for `POST /run` and `POST /run/:run/jobs`
+
 ### v1.2.0
 
-- :data: Add support for `/data` and `/data/:data`
+- :tada: Add support for `GET /data` and `GET /data/:data`
 
 ### v1.1.1
 
@@ -20,13 +24,13 @@
 
 ### v1.1.0
 
-- :tada: Add support for `/api/dash/traffic`
-- :tada: Add support for `/api/dash/collections`
+- :tada: Add support for `GET /api/dash/traffic`
+- :tada: Add support for `GET /api/dash/collections`
 - :rocket: Add centralized request auth manager
 
 ### v1.0.1
 
-- :tada: Add support for `/api/schedule`
+- :tada: Add support for `POST /api/schedule`
 
 ### v0.0.1
 
