@@ -28,7 +28,9 @@ class OA {
         this._ = {
             schedule: new (require('./src/schedule'))(this),
             analytics: new (require('./src/analytics'))(this),
-            data: new (require('./src/data'))(this)
+            data: new (require('./src/data'))(this),
+            job: new (require('./src/job'))(this),
+            run: new (require('./src/run'))(this)
         };
     }
 }
@@ -55,6 +57,8 @@ if (require.main === module) {
         console.error('<command>');
         console.error('    analytics                   Analytic API');
         console.error('    schedule                    Schedule API');
+        console.error('    data                        List and download current data');
+        console.error('    job                         Start & get information about job runs');
         console.error('    help                        Displays this message');
         console.error('');
         console.error('<options>');
