@@ -3,6 +3,7 @@
 'use strict';
 
 const inquire = require('inquirer');
+const cli = require('./src/cli');
 const settings = require('./package.json');
 const util = require('./src/util');
 const run = require('./src/run');
@@ -65,11 +66,13 @@ if (require.main === module) {
         }
     });
 
-    cli(argv);
+    runner(argv);
 }
 
-async function cli(argv) {
+async function runner(argv) {
     const oa = new OA(argv);
+
+    if (argv.help) return cli.help(argv, oa);
 
     if (!argv.script) {
         const res = await inquire.prompt([{

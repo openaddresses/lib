@@ -7,7 +7,7 @@ async function run(api, url, body) {
     const req = {
         json: true,
         url: new URL('/api/' + url.split(' ')[1], api.url + '/api'),
-        method: url.split(' ')[0]
+        method: url.split(' ')[0],
         headers: {}
     };
 
