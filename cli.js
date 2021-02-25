@@ -5,6 +5,7 @@
 const inquire = require('inquirer');
 const settings = require('./package.json');
 const util = require('./src/util');
+const run = require('./src/run');
 
 /**
  * @class OA
@@ -27,15 +28,25 @@ class OA {
             secret: api.secret ? api.secret : process.env.OA_SECRET
         };
 
-        this.schema = false;
+        this.schema = util.local_schema();
     }
 
-    async get_schema() {
-        this.schema = await util.schema(this);
-    }
+    /**
+     * Run an OpenAddresses Command
+     *
+     * @param {String} cmd - Command to run
+     * @param {String} subcmd - Subcommand to run
+     *
+     * @param {Object} body - Optional API Body
+     */
+    async cmd(cmd, subcmd, body) {
+        if (process.env.UPDATE) this.schema = await util.schema(this.url)
 
-    async api() {
+        if (!this.schema.cli[cmd]) throw new Error('Command Not Found');
+        if (!this.schema.cli[cmd][subcmd]) throw new Error('Subcommand Not Found');
+        if (!this.schema.schema[this.schema.cli[cmd][subcmd]]) throw new Error('API not found for Subcommand');
 
+        return await run(this, this.schema.cli[cmd][subcmd]);
     }
 }
 
@@ -70,7 +81,9 @@ async function cli(argv) {
         oa.url = new URL(res.url).toString();
     }
 
-    await oa.get_schema();
-
     argv.cli = true;
+
+    const res = await oa.cmd(argv._[2], argv._[3]);
+
+    console.log(JSON.stringify(res, null, 4))
 }

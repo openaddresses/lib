@@ -45,7 +45,7 @@
             "log": "GET /job/:job/log"
         },
         "joberror": {
-            "create": "POST /job/error",,
+            "create": "POST /job/error",
             "moderate": "POST /job/error/:job",
             "list": "GET /job/error",
             "count": "GET /job/error/count",
