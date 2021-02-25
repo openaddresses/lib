@@ -17,6 +17,8 @@ class OA {
      * @param {string} api.url URL of OA API instance to interact with
      * @param {string} api.username OpenAddresses Username
      * @param {string} api.password OpenAddresses Password
+     * @param {string} api.secret OpenAddresses SharedSecret
+     * @param {string} api.token OpenAddresses Token
      */
     constructor(api = {}) {
         this.url = api.url ? new URL(api.url).toString() : 'https://batch.openaddresses.io';
