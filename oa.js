@@ -72,7 +72,15 @@ if (require.main === module) {
 async function runner(argv) {
     const oa = new OA(argv);
 
-    if (argv.help) return cli.help(argv, oa);
+    if (argv.help) {
+        return cli.help(argv, oa);
+    } else if (!argv._[2] || !argv._[3]) {
+        console.log();
+        console.log('Invalid Command');
+        console.log();
+        cli.help(argv, oa);
+        process.exit();
+    }
 
     if (!argv.script) {
         const res = await inquire.prompt([{
