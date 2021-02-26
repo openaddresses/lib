@@ -10,6 +10,11 @@
 
 ## Version History
 
+### v2.0.0
+
+- :tada: Automatically generate CLI from Schema API
+- :rocket: Add support for all JSON apis
+
 ### v1.3.0
 
 - :tada: Add support for `POST /run` and `POST /run/:run/jobs`
