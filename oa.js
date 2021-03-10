@@ -8,6 +8,16 @@ const settings = require('./package.json');
 const util = require('./src/util');
 const run = require('./src/run');
 
+const argv = require('minimist')(process.argv, {
+    boolean: ['help', 'version'],
+    string: ['url', 'username', 'password'],
+    alias: {
+        version: 'v',
+        help: '?'
+    }
+});
+
+
 /**
  * @class OA
  */
@@ -49,7 +59,26 @@ class OA {
         if (!this.schema.cli[cmd][subcmd]) throw new Error('Subcommand Not Found');
         if (!this.schema.schema[this.schema.cli[cmd][subcmd]]) throw new Error('API not found for Subcommand');
 
-        return await run(this, this.schema.cli[cmd][subcmd]);
+        let url = this.schema.cli[cmd][subcmd];
+        const matches = url.match(/:[a-z]+/g);
+
+        for (const match of matches) {
+            if (argv.cli && !argv.script && matches.length) {
+                const res = await inquire.prompt([{
+                    name: match,
+                    message: `${match} to fetch`,
+                    type: 'string',
+                    required: 'true',
+                    default: body[match]
+                }]);
+
+                body[match] = res[match]
+            }
+
+            url = url.replace(match, body[match]);
+        }
+
+        return await run(this, url);
     }
 }
 
@@ -57,15 +86,6 @@ module.exports = OA;
 
 // Run in CLI mode
 if (require.main === module) {
-    const argv = require('minimist')(process.argv, {
-        boolean: ['help', 'version'],
-        string: ['url', 'username', 'password'],
-        alias: {
-            version: 'v',
-            help: '?'
-        }
-    });
-
     runner(argv);
 }
 
@@ -96,7 +116,7 @@ async function runner(argv) {
 
     argv.cli = true;
 
-    const res = await oa.cmd(argv._[2], argv._[3]);
+    const res = await oa.cmd(argv._[2], argv._[3], argv);
 
     console.log(JSON.stringify(res, null, 4))
 }

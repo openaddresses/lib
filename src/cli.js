@@ -8,7 +8,7 @@ function help(argv, oa) {
             console.log('    ' + s);
         }
         options();
-    } else if (argv.[2] && !argv._[3]) {
+    } else if (argv._[2] && !argv._[3]) {
         console.log('');
         console.log(`usage: oa.js ${argv._[2]} <subcommand> [--raw] [--script] [--version] [--help]`);
         console.log('');

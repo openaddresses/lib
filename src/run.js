@@ -1,7 +1,7 @@
 const { promisify } = require('util');
 const request = promisify(require('request'));
 
-async function run(api, url, body) {
+async function run(api, url, params, body) {
     const schema = api.schema.schema[url]
 
     const req = {
