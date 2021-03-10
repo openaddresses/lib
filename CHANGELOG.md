@@ -10,6 +10,10 @@
 
 ## Version History
 
+### v2.1.0
+
+- :tada: Add support for query params
+
 ### v2.0.0
 
 - :tada: Automatically generate CLI from Schema API
