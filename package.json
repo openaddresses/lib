@@ -1,6 +1,6 @@
 {
   "name": "lib-oa",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "main": "oa.js",
   "repository": "git@github.com:openaddresses/lib",
   "author": "ingalls <nick@ingalls.ca>",
