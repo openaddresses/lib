@@ -7,7 +7,7 @@
   "license": "MIT",
   "dependencies": {
     "asciichart": "^1.5.25",
-    "inquirer": "^7.3.3",
+    "inquirer": "^8.0.0",
     "minimist": "^1.2.5",
     "request": "^2.88.2"
   }

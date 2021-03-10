@@ -8,7 +8,7 @@ function help(argv, oa) {
             console.log('    ' + s);
         }
         options();
-    } else if (!argv._[3]) {
+    } else if (argv._[2] && !argv._[3]) {
         console.log('');
         console.log(`usage: oa.js ${argv._[2]} <subcommand> [--raw] [--script] [--version] [--help]`);
         console.log('');
@@ -17,6 +17,12 @@ function help(argv, oa) {
             console.log('    ' + s);
         }
         options();
+    } else {
+        console.log('');
+        console.log('Unknown help subcommand');
+        console.log('oa --help');
+        console.log('oa <subcommand> --help');
+        console.log('');
     }
 }
 
