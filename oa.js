@@ -9,7 +9,7 @@ const util = require('./src/util');
 const run = require('./src/run');
 
 const argv = require('minimist')(process.argv, {
-    boolean: ['help', 'version'],
+    boolean: ['help', 'version', 'trace'],
     string: ['url', 'username', 'password'],
     alias: {
         version: 'v',
@@ -75,6 +75,7 @@ class OA {
                 body[match] = res[match]
             }
 
+            if (!body[match]) throw new Error(`"${match}" is required in body`);
             url = url.replace(match, body[match]);
         }
 
@@ -116,7 +117,16 @@ async function runner(argv) {
 
     argv.cli = true;
 
-    const res = await oa.cmd(argv._[2], argv._[3], argv);
+    try {
+        const res = await oa.cmd(argv._[2], argv._[3], argv);
 
-    console.log(JSON.stringify(res, null, 4))
+        console.log(JSON.stringify(res, null, 4))
+    } catch (err) {
+        if (argv.trace) throw err;
+
+        console.error();
+        console.error(err.message);
+        console.error();
+        process.exit(1);
+    }
 }
