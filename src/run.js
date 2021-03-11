@@ -13,21 +13,21 @@ async function run(api, url, params, body) {
 
     if (body) req.body = body;
 
-    if (api.username && api.password) {
+    if (api.user.username && api.user.password) {
         req.auth = {
-            'user': api.username,
-            'pass': api.password
+            'user': api.user.username,
+            'pass': api.user.password
         };
     }
 
-    if (api.token) {
+    if (api.user.token) {
         req.auth = {
-            bearer: api.token
+            bearer: api.user.token
         };
     }
 
-    if (api.secret) {
-        req.headers['shared-secret'] = api.secret;
+    if (api.user.secret) {
+        req.headers['shared-secret'] = api.user.secret;
     }
 
     const res = await request(req);
