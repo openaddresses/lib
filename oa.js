@@ -62,21 +62,23 @@ class OA {
         let url = this.schema.cli[cmd][subcmd];
         const matches = url.match(/:[a-z]+/g);
 
-        for (const match of matches) {
-            if (argv.cli && !argv.script && matches.length) {
-                const res = await inquire.prompt([{
-                    name: match,
-                    message: `${match} to fetch`,
-                    type: 'string',
-                    required: 'true',
-                    default: body[match]
-                }]);
+        if (matches) {
+            for (const match of matches) {
+                if (argv.cli && !argv.script && matches.length) {
+                    const res = await inquire.prompt([{
+                        name: match,
+                        message: `${match} to fetch`,
+                        type: 'string',
+                        required: 'true',
+                        default: body[match]
+                    }]);
 
-                body[match] = res[match]
+                    body[match] = res[match]
+                }
+
+                if (!body[match]) throw new Error(`"${match}" is required in body`);
+                url = url.replace(match, body[match]);
             }
-
-            if (!body[match]) throw new Error(`"${match}" is required in body`);
-            url = url.replace(match, body[match]);
         }
 
         return await run(this, url);
