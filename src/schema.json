@@ -3,6 +3,13 @@
         "schema": {
             "list": "GET /schema"
         },
+        "export": {
+            "create": "POST /export",
+            "list": "GET /export",
+            "get": "GET /export/:exportid",
+            "log": "GET /export/:exportid/log",
+            "update": "PATCH /export/:exportid"
+        },
         "user": {
             "register": "POST /user",
             "update": "PATCH /user/:id",
