@@ -4,7 +4,7 @@ const request = promisify(require('request'));
 async function run(api, schema, url, payload) {
     const req = {
         json: true,
-        url: new URL('/api/' + url.split(' ')[1], api.url + '/api'),
+        url: new URL('/api' + url.split(' ')[1], api.url + '/api'),
         method: url.split(' ')[0],
         headers: {}
     };
