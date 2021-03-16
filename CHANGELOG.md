@@ -10,6 +10,12 @@
 
 ## Version History
 
+### v2.2.0
+
+- :bug: Fix authentication
+- :tada: Add exports API support
+- :rocket: Add suppport for request params/body
+
 ### v2.1.0
 
 - :tada: Add support for query params
