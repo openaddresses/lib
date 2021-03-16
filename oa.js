@@ -50,9 +50,9 @@ class OA {
      * @param {String} cmd - Command to run
      * @param {String} subcmd - Subcommand to run
      *
-     * @param {Object} body - Optional API Body
+     * @param {Object} payload - Optional API Payload
      */
-    async cmd(cmd, subcmd, body) {
+    async cmd(cmd, subcmd, payload) {
         if (process.env.UPDATE) this.schema = await util.schema(this.url)
 
         if (!this.schema.cli[cmd]) throw new Error('Command Not Found');
@@ -62,24 +62,28 @@ class OA {
         let url = this.schema.cli[cmd][subcmd];
         const matches = url.match(/:[a-z]+/g);
 
-        for (const match of matches) {
-            if (argv.cli && !argv.script && matches.length) {
-                const res = await inquire.prompt([{
-                    name: match,
-                    message: `${match} to fetch`,
-                    type: 'string',
-                    required: 'true',
-                    default: body[match]
-                }]);
+        if (matches) {
+            for (const match of matches) {
+                if (argv.cli && !argv.script && matches.length) {
+                    const res = await inquire.prompt([{
+                        name: match,
+                        message: `${match} to fetch`,
+                        type: 'string',
+                        required: 'true',
+                        default: payload[match]
+                    }]);
 
-                body[match] = res[match]
+                    payload[match] = res[match]
+                }
+
+                if (!payload[match]) throw new Error(`"${match}" is required in body`);
+                url = url.replace(match, payload[match]);
+                delete payload[match]
             }
-
-            if (!body[match]) throw new Error(`"${match}" is required in body`);
-            url = url.replace(match, body[match]);
         }
 
-        return await run(this, url);
+        const schema = this.schema.schema[this.schema.cli[cmd][subcmd]];
+        return await run(this, schema, url, payload);
     }
 }
 
@@ -125,7 +129,7 @@ async function runner(argv) {
         if (argv.trace) throw err;
 
         console.error();
-        console.error(err.message);
+        console.error(err.message)
         console.error();
         process.exit(1);
     }

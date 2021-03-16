@@ -1,36 +1,38 @@
 const { promisify } = require('util');
 const request = promisify(require('request'));
 
-async function run(api, url, params, body) {
-    const schema = api.schema.schema[url]
-
+async function run(api, schema, url, payload) {
     const req = {
         json: true,
-        url: new URL('/api/' + url.split(' ')[1], api.url + '/api'),
+        url: new URL('/api' + url.split(' ')[1], api.url + '/api'),
         method: url.split(' ')[0],
         headers: {}
     };
 
-    if (body) req.body = body;
-
-    if (api.username && api.password) {
+    if (api.user.username && api.user.password) {
         req.auth = {
-            'user': api.username,
-            'pass': api.password
+            'user': api.user.username,
+            'pass': api.user.password
         };
     }
 
-    if (api.token) {
+    if (api.user.token) {
         req.auth = {
-            bearer: api.token
+            bearer: api.user.token
         };
     }
 
-    if (api.secret) {
-        req.headers['shared-secret'] = api.secret;
+    if (api.user.secret) {
+        req.headers['shared-secret'] = api.user.secret;
     }
+
+    if (schema.body) req.body = payload;
 
     const res = await request(req);
+
+    if (res.statusCode !== 200) {
+        throw new Error(res.body.message);
+    }
 
     return res.body;
 }
