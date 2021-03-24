@@ -32,7 +32,15 @@ async function run(api, schema, url, payload) {
         const res = await request(req);
 
         if (res.statusCode !== 200) {
-            throw new Error(res.body.message);
+            if (typeof res.body === 'object') {
+                if (res.body.message) {
+                    throw new Error(res.statusCode, ': ' + res.body.message);
+                } else {
+                    throw new Error(res.statusCode, ': ' + 'No .message');
+                }
+            }
+
+            throw new Error(res.body)
         }
 
         return res.body;

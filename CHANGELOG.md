@@ -10,6 +10,14 @@
 
 ## Version History
 
+### v2.2.2
+
+- :bug: Better response body error handling
+
+### v2.2.1
+
+- :bug: Better async error handling
+
 ### v2.2.0
 
 - :bug: Fix authentication
