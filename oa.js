@@ -83,7 +83,11 @@ class OA {
         }
 
         const schema = this.schema.schema[this.schema.cli[cmd][subcmd]];
-        return await run(this, schema, url, payload);
+        try {
+            return await run(this, schema, url, payload);
+        } catch (err) {
+            throw err;
+        }
     }
 }
 

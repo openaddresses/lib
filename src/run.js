@@ -28,13 +28,17 @@ async function run(api, schema, url, payload) {
 
     if (schema.body) req.body = payload;
 
-    const res = await request(req);
+    try {
+        const res = await request(req);
 
-    if (res.statusCode !== 200) {
-        throw new Error(res.body.message);
+        if (res.statusCode !== 200) {
+            throw new Error(res.body.message);
+        }
+
+        return res.body;
+    } catch (err) {
+        throw err;
     }
-
-    return res.body;
 }
 
 module.exports = run;
