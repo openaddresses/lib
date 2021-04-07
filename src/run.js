@@ -34,9 +34,9 @@ async function run(api, schema, url, payload) {
         if (res.statusCode !== 200) {
             if (typeof res.body === 'object') {
                 if (res.body.message) {
-                    throw new Error(res.statusCode, ': ' + res.body.message);
+                    throw new Error(res.statusCode + ': ' + res.body.message);
                 } else {
-                    throw new Error(res.statusCode, ': ' + 'No .message');
+                    throw new Error(res.statusCode + ': ' + 'No .message');
                 }
             }
 
