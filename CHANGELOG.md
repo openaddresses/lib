@@ -10,6 +10,10 @@
 
 ## Version History
 
+### v2.2.3
+
+- :bug: Fix error message formatting
+
 ### v2.2.2
 
 - :bug: Better response body error handling
