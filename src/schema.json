@@ -8,7 +8,8 @@
             "list": "GET /export",
             "get": "GET /export/:exportid",
             "log": "GET /export/:exportid/log",
-            "update": "PATCH /export/:exportid"
+            "update": "PATCH /export/:exportid",
+            "download": "GET /export/:exportid/output/export.zip"
         },
         "user": {
             "register": "POST /user",
@@ -49,7 +50,8 @@
             "download": "GET /job/:job/output/source.geojson.gz",
             "sample": "GET /job/:job/output/sample",
             "cache": "GET /job/:job/output/cache.zip",
-            "log": "GET /job/:job/log"
+            "log": "GET /job/:job/log",
+            "raw": "GET /job/:job/raw"
         },
         "joberror": {
             "create": "POST /job/error",
@@ -170,6 +172,11 @@
             "query": false,
             "res": false
         },
+        "GET /map/borders/:z/:x/:y.mvt": {
+            "body": false,
+            "query": false,
+            "res": false
+        },
         "GET /map/:z/:x/:y.mvt": {
             "body": false,
             "query": false,
@@ -260,6 +267,11 @@
             "query": false,
             "res": true
         },
+        "GET /job/:job/raw": {
+            "body": false,
+            "query": false,
+            "res": false
+        },
         "POST /job/:job/rerun": {
             "body": false,
             "query": false,
@@ -329,6 +341,11 @@
             "body": false,
             "query": false,
             "res": true
+        },
+        "GET /export/:exportid/output/export.zip": {
+            "body": false,
+            "query": false,
+            "res": false
         },
         "PATCH /export/:exportid": {
             "body": true,

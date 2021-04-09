@@ -107,7 +107,6 @@ async function runner(argv) {
         console.log();
         console.log('Invalid Command');
         console.log();
-        cli.help(argv, oa);
         process.exit();
     }
 
