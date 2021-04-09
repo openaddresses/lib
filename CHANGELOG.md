@@ -10,6 +10,10 @@
 
 ## Version History
 
+### v2.3.0
+
+- :rocket: Add new API Endpoints (job#raw, export#download)
+
 ### v2.2.3
 
 - :bug: Fix error message formatting
