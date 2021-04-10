@@ -10,6 +10,10 @@
 
 ## Version History
 
+### v2.4.0
+
+- :tada: Add support for query params
+
 ### v2.3.0
 
 - :rocket: Add new API Endpoints (job#raw, export#download)
