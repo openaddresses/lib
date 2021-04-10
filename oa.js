@@ -101,13 +101,8 @@ if (require.main === module) {
 async function runner(argv) {
     const oa = new OA(argv);
 
-    if (argv.help) {
+    if (argv.help || !argv._[2] || !argv._[3]) {
         return cli.help(argv, oa);
-    } else if (!argv._[2] || !argv._[3]) {
-        console.log();
-        console.log('Invalid Command');
-        console.log();
-        process.exit();
     }
 
     if (!argv.script) {

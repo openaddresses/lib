@@ -26,7 +26,13 @@ async function run(api, schema, url, payload) {
         req.headers['shared-secret'] = api.user.secret;
     }
 
-    if (schema.body) req.body = payload;
+    if (schema.body) {
+        req.body = payload;
+    } else if (schema.query) {
+        for (const key of Object.keys(payload)) {
+            req.url.searchParams.append(key, payload[key]);
+        }
+    }
 
     try {
         const res = await request(req);
