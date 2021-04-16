@@ -10,6 +10,10 @@
 
 ## Version History
 
+### v2.4.1
+
+- :bug: remove hashbang for web compat
+
 ### v2.4.0
 
 - :tada: Add support for query params
