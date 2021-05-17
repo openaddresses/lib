@@ -10,6 +10,10 @@
 
 ## Version History
 
+### v2.5.0
+
+- :rocket: Add basic support for automatically generating CLI prompt flows for body contents
+
 ### v2.4.1
 
 - :bug: remove hashbang for web compat
