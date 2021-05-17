@@ -8,21 +8,30 @@ function local_schema() {
     return local;
 }
 
-async function schema(url) {
+async function schema(url, method, path) {
+    url = new URL(`/api/schema`, url);
+
+    if (method) url.searchParams.append('method', method);
+    if (path) url.searchParams.append('url', path);
+
     const res = await request({
         json: true,
         method: 'GET',
-        url: new URL(`/api/schema`, url)
+        url: url
     });
 
     if (res.statusCode !== 200) throw new Error(res.body.message ? res.body.message : res.body);
 
-    const local = local_schema();
-    local.schema = res.body;
+    if (!method && !path) {
+        const local = local_schema();
+        local.schema = res.body;
 
-    fs.writeFileSync(path.resolve(__dirname, './schema.json'), JSON.stringify(local, null, 4));
+        fs.writeFileSync(path.resolve(__dirname, './schema.json'), JSON.stringify(local, null, 4));
 
-    return local;
+        return local;
+    } else {
+        return res.body;
+    }
 }
 
 module.exports = {

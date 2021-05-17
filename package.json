@@ -1,14 +1,18 @@
 {
-  "name": "lib-oa",
-  "version": "2.4.1",
-  "main": "oa.js",
-  "repository": "git@github.com:openaddresses/lib",
-  "author": "ingalls <nick@ingalls.ca>",
-  "license": "MIT",
-  "dependencies": {
-    "asciichart": "^1.5.25",
-    "inquirer": "^8.0.0",
-    "minimist": "^1.2.5",
-    "request": "^2.88.2"
-  }
+    "name": "lib-oa",
+    "version": "2.4.1",
+    "main": "oa.js",
+    "repository": "git@github.com:openaddresses/lib",
+    "author": "ingalls <nick@ingalls.ca>",
+    "license": "MIT",
+    "dependencies": {
+        "inquirer": "^8.0.0",
+        "request": "^2.88.2"
+    },
+    "devDependencies": {
+        "asciichart": "^1.5.25",
+        "eslint": "^7.24.0",
+        "eslint-plugin-node": "^11.1.0",
+        "minimist": "^1.2.5"
+    }
 }

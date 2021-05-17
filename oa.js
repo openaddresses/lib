@@ -1,10 +1,12 @@
+#!/usr/bin/env node
+
 'use strict';
 
-const inquire = require('inquirer');
 const cli = require('./src/cli');
 const settings = require('./package.json');
 const util = require('./src/util');
 const run = require('./src/run');
+const inquire = require('inquirer');
 
 const argv = require('minimist')(process.argv, {
     boolean: ['help', 'version', 'trace'],
@@ -50,7 +52,7 @@ class OA {
      *
      * @param {Object} payload - Optional API Payload
      */
-    async cmd(cmd, subcmd, payload) {
+    async cmd(cmd, subcmd, payload = {}) {
         if (process.env.UPDATE) this.schema = await util.schema(this.url)
 
         if (!this.schema.cli[cmd]) throw new Error('Command Not Found');
@@ -81,6 +83,31 @@ class OA {
         }
 
         const schema = this.schema.schema[this.schema.cli[cmd][subcmd]];
+
+        if (argv.cli && !argv.script && schema.body) {
+            const body = (await util.schema(this.url, ...this.schema.cli[cmd][subcmd].split(' '))).body;
+
+            for (const prop of Object.keys(body.properties)) {
+                let p = body.properties[prop];
+
+                const ask = {
+                    name: prop,
+                    message: `${prop} to populate`,
+                    type: p.type,
+                    required: 'true'
+                };
+
+                if (p.enum) {
+                    ask.type = 'list';
+                    ask.choices = p.enum;
+                }
+
+                const res = await inquire.prompt([ask]);
+                payload[prop] = res[prop]
+
+            }
+        }
+
         try {
             return await run(this, schema, url, payload);
         } catch (err) {
@@ -118,7 +145,7 @@ async function runner(argv) {
     argv.cli = true;
 
     try {
-        const res = await oa.cmd(argv._[2], argv._[3], argv);
+        const res = await oa.cmd(argv._[2], argv._[3]);
 
         console.log(JSON.stringify(res, null, 4))
     } catch (err) {
