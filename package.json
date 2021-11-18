@@ -7,12 +7,12 @@
     "license": "MIT",
     "dependencies": {
         "inquirer": "^8.0.0",
+        "minimist": "^1.2.5",
         "request": "^2.88.2"
     },
     "devDependencies": {
         "asciichart": "^1.5.25",
         "eslint": "^7.24.0",
-        "eslint-plugin-node": "^11.1.0",
-        "minimist": "^1.2.5"
+        "eslint-plugin-node": "^11.1.0"
     }
 }
