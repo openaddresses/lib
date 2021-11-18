@@ -9,7 +9,7 @@ function local_schema() {
 }
 
 async function schema(url, method, path) {
-    url = new URL(`/api/schema`, url);
+    url = new URL('/api/schema', url);
 
     if (method) url.searchParams.append('method', method);
     if (path) url.searchParams.append('url', path);

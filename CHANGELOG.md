@@ -10,6 +10,10 @@
 
 ## Version History
 
+### v2.5.1
+
+- :arrow_up: General Dep Update
+
 ### v2.5.0
 
 - :rocket: Add basic support for automatically generating CLI prompt flows for body contents

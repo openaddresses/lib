@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-'use strict';
-
 const cli = require('./src/cli');
 const settings = require('./package.json');
 const util = require('./src/util');
@@ -53,7 +51,7 @@ class OA {
      * @param {Object} payload - Optional API Payload
      */
     async cmd(cmd, subcmd, payload = {}) {
-        if (process.env.UPDATE) this.schema = await util.schema(this.url)
+        if (process.env.UPDATE) this.schema = await util.schema(this.url);
 
         if (!this.schema.cli[cmd]) throw new Error('Command Not Found');
         if (!this.schema.cli[cmd][subcmd]) throw new Error('Subcommand Not Found');
@@ -73,12 +71,12 @@ class OA {
                         default: payload[match]
                     }]);
 
-                    payload[match] = res[match]
+                    payload[match] = res[match];
                 }
 
                 if (!payload[match]) throw new Error(`"${match}" is required in body`);
                 url = url.replace(match, payload[match]);
-                delete payload[match]
+                delete payload[match];
             }
         }
 
@@ -88,7 +86,7 @@ class OA {
             const body = (await util.schema(this.url, ...this.schema.cli[cmd][subcmd].split(' '))).body;
 
             for (const prop of Object.keys(body.properties)) {
-                let p = body.properties[prop];
+                const p = body.properties[prop];
 
                 const ask = {
                     name: prop,
@@ -103,16 +101,12 @@ class OA {
                 }
 
                 const res = await inquire.prompt([ask]);
-                payload[prop] = res[prop]
+                payload[prop] = res[prop];
 
             }
         }
 
-        try {
-            return await run(this, schema, url, payload);
-        } catch (err) {
-            throw err;
-        }
+        return await run(this, schema, url, payload);
     }
 }
 
@@ -124,6 +118,11 @@ if (require.main === module) {
 }
 
 async function runner(argv) {
+    if (argv.version) {
+        console.log(`openaddresses/lib@${settings.version}`);
+        return;
+    }
+
     const oa = new OA(argv);
 
     if (argv.help || !argv._[2] || !argv._[3]) {
@@ -147,12 +146,12 @@ async function runner(argv) {
     try {
         const res = await oa.cmd(argv._[2], argv._[3]);
 
-        console.log(JSON.stringify(res, null, 4))
+        console.log(JSON.stringify(res, null, 4));
     } catch (err) {
         if (argv.trace) throw err;
 
         console.error();
-        console.error(err.message)
+        console.error(err.message);
         console.error();
         process.exit(1);
     }

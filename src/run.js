@@ -34,25 +34,21 @@ async function run(api, schema, url, payload) {
         }
     }
 
-    try {
-        const res = await request(req);
+    const res = await request(req);
 
-        if (res.statusCode !== 200) {
-            if (typeof res.body === 'object') {
-                if (res.body.message) {
-                    throw new Error(res.statusCode + ': ' + res.body.message);
-                } else {
-                    throw new Error(res.statusCode + ': ' + 'No .message');
-                }
+    if (res.statusCode !== 200) {
+        if (typeof res.body === 'object') {
+            if (res.body.message) {
+                throw new Error(res.statusCode + ': ' + res.body.message);
+            } else {
+                throw new Error(res.statusCode + ': ' + 'No .message');
             }
-
-            throw new Error(res.body)
         }
 
-        return res.body;
-    } catch (err) {
-        throw err;
+        throw new Error(res.body);
     }
+
+    return res.body;
 }
 
 module.exports = run;

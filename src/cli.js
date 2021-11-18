@@ -38,4 +38,4 @@ function options() {
 
 module.exports = {
     help
-}
+};
