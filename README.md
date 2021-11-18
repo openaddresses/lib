@@ -9,13 +9,13 @@
 **JS Library**
 
 ```sh
-yarn add 'oa'
+npm add '@openaddresses/lib'
 ```
 
 **CLI**
 
 ```sh
-yarn global add 'oa'
+npm add --global @openaddresses/lib
 ```
 
 <h3 align=center>Instantiation</h3>
