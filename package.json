@@ -1,6 +1,6 @@
 {
     "name": "lib-oa",
-    "version": "2.5.0",
+    "version": "2.5.1",
     "main": "oa.js",
     "repository": "git@github.com:openaddresses/lib",
     "author": "ingalls <nick@ingalls.ca>",
@@ -9,10 +9,10 @@
         "lint": "eslint *.js src/**.js"
     },
     "dependencies": {
+        "asciichart": "^1.5.25",
         "inquirer": "^8.0.0",
         "minimist": "^1.2.5",
-        "request": "^2.88.2",
-        "asciichart": "^1.5.25"
+        "request": "^2.88.2"
     },
     "devDependencies": {
         "@babel/eslint-parser": "^7.16.3",
