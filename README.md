@@ -9,13 +9,13 @@
 **JS Library**
 
 ```sh
-yarn add 'oa'
+yarn add 'lib-oa'
 ```
 
 **CLI**
 
 ```sh
-yarn global add 'oa'
+yarn global add 'lib-oa'
 ```
 
 <h3 align=center>Instantiation</h3>
@@ -28,7 +28,7 @@ Alternatively an API token can be provided via a `OA_TOKEN` environment variable
 **JS Library**
 
 ```js
-const OA = require('oa');
+const OA = require('lib-oa');
 
 const oa = new OA({
     username: 'ingalls',
