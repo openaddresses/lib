@@ -11,7 +11,7 @@
     },
     "devDependencies": {
         "asciichart": "^1.5.25",
-        "eslint": "^7.24.0",
+        "eslint": "^8.2.0",
         "eslint-plugin-node": "^11.1.0",
         "minimist": "^1.2.5"
     }
