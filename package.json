@@ -1,5 +1,5 @@
 {
-    "name": "lib-oa",
+    "name": "@openaddresses/lib",
     "version": "2.5.1",
     "main": "oa.js",
     "repository": "git@github.com:openaddresses/lib",

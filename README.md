@@ -28,7 +28,7 @@ Alternatively an API token can be provided via a `OA_TOKEN` environment variable
 **JS Library**
 
 ```js
-const OA = require('oa');
+const OA = require('@openaddresses/lib');
 
 const oa = new OA({
     username: 'ingalls',
