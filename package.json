@@ -8,6 +8,9 @@
     "scripts": {
         "lint": "eslint *.js src/**.js"
     },
+    "bin": {
+        "oa": "oa.js"
+    },
     "dependencies": {
         "asciichart": "^1.5.25",
         "inquirer": "^8.0.0",
