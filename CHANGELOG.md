@@ -10,6 +10,10 @@
 
 ## Version History
 
+### v2.5.2
+
+- :tada: Add `oa` to bin of package.json
+
 ### v2.5.1
 
 - :arrow_up: General Dep Update
