@@ -10,6 +10,10 @@
 
 ## Version History
 
+### v2.5.3
+
+- :tada: Add API descriptions to help documentation
+
 ### v2.5.2
 
 - :tada: Add `oa` to bin of package.json
