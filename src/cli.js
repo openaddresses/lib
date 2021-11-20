@@ -5,15 +5,17 @@ function help(argv, oa) {
         console.log('');
         console.log('<command>');
         for (const s of Object.keys(oa.schema.cli)) {
-            console.log('    ' + s);
+            console.log('    ' + s + ' '.repeat(28 - s.length) + oa.schema.cli[s].description);
         }
         options();
     } else if (argv._[2] && !argv._[3]) {
         console.log('');
         console.log(`usage: oa.js ${argv._[2]} <subcommand> [--raw] [--script] [--version] [--help]`);
         console.log('');
+        console.log('desc:', oa.schema.cli[argv._[2]].description);
+        console.log('');
         console.log('<command>');
-        for (const s of Object.keys(oa.schema.cli[argv._[2]])) {
+        for (const s of Object.keys(oa.schema.cli[argv._[2]].cmds)) {
             console.log('    ' + s);
         }
         options();

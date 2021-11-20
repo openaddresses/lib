@@ -1,69 +1,102 @@
 {
     "cli": {
         "schema": {
-            "list": "GET /schema"
+            "description": "JSON Schema API",
+            "cmds": {
+                "list": "GET /schema"
+            }
         },
         "export": {
-            "create": "POST /export",
-            "list": "GET /export",
-            "get": "GET /export/:exportid",
-            "log": "GET /export/:exportid/log",
-            "update": "PATCH /export/:exportid",
-            "download": "GET /export/:exportid/output/export.zip"
+            "description": "Source Export API",
+            "cmds": {
+                "create": "POST /export",
+                "list": "GET /export",
+                "get": "GET /export/:exportid",
+                "log": "GET /export/:exportid/log",
+                "update": "PATCH /export/:exportid",
+                "download": "GET /export/:exportid/output/export.zip"
+            }
         },
         "user": {
-            "register": "POST /user",
-            "update": "PATCH /user/:id",
-            "get": "GET /user"
+            "description": "User API",
+            "cmds": {
+                "register": "POST /user",
+                "update": "PATCH /user/:id",
+                "get": "GET /user"
+            }
         },
         "schedule": {
-            "fire": "POST /schedule"
+            "description": "Scheduled Events API",
+            "cmds": {
+                "fire": "POST /schedule"
+            }
         },
         "collection": {
-            "list": "GET /collections",
-            "download": "GET /collections/:collection/data",
-            "delete": "DELETE /collections/:collection",
-            "create": "POST /collections",
-            "update": "PATCH /collections/:collection"
+            "description": "Collections API",
+            "cmds": {
+                "list": "GET /collections",
+                "download": "GET /collections/:collection/data",
+                "delete": "DELETE /collections/:collection",
+                "create": "POST /collections",
+                "update": "PATCH /collections/:collection"
+            }
         },
         "data": {
-            "list": "GET /data",
-            "get": "GET /data/:data",
-            "history": "GET /data/:data/history"
+            "description": "Data API",
+            "cmds": {
+                "list": "GET /data",
+                "get": "GET /data/:data",
+                "history": "GET /data/:data/history"
+            }
         },
         "run": {
-            "list": "GET /run",
-            "create": "POST /run",
-            "create_jobs": "POST /run/:run/jobs",
-            "update": "PATCH /run/:run",
-            "get": "GET /run/:run",
-            "jobs": "GET /run/:run/jobs",
-            "jobs_count": "GET /run/:run/count"
+            "description": "Runs API",
+            "cmds": {
+                "list": "GET /run",
+                "create": "POST /run",
+                "create_jobs": "POST /run/:run/jobs",
+                "update": "PATCH /run/:run",
+                "get": "GET /run/:run",
+                "jobs": "GET /run/:run/jobs",
+                "jobs_count": "GET /run/:run/count"
+            }
         },
         "job": {
-            "list": "GET /job",
-            "update": "PATCH /job/:job",
-            "get": "GET /job/:job",
-            "rerun": "POST /job/:job/rerun",
-            "delta": "GET /job/:job/delta",
-            "preview": "GET /job/:job/output/source.png",
-            "download": "GET /job/:job/output/source.geojson.gz",
-            "sample": "GET /job/:job/output/sample",
-            "cache": "GET /job/:job/output/cache.zip",
-            "log": "GET /job/:job/log",
-            "raw": "GET /job/:job/raw"
+            "description": "Jobs API",
+            "cmds": {
+                "list": "GET /job",
+                "update": "PATCH /job/:job",
+                "get": "GET /job/:job",
+                "rerun": "POST /job/:job/rerun",
+                "delta": "GET /job/:job/delta",
+                "preview": "GET /job/:job/output/source.png",
+                "download": "GET /job/:job/output/source.geojson.gz",
+                "sample": "GET /job/:job/output/sample",
+                "cache": "GET /job/:job/output/cache.zip",
+                "log": "GET /job/:job/log",
+                "raw": "GET /job/:job/raw"
+            }
         },
         "joberror": {
-            "create": "POST /job/error",
-            "moderate": "POST /job/error/:job",
-            "list": "GET /job/error/:job",
-            "count": "GET /job/error/count"
+            "description": "Job Errors API",
+            "cmds": {
+                "create": "POST /job/error",
+                "moderate": "POST /job/error/:job",
+                "list": "GET /job/error/:job",
+                "count": "GET /job/error/count"
+            }
         },
         "upload": {
-            "create": "POST /upload"
+            "description": "Manual Source Upload API",
+            "cmds": {
+                "create": "POST /upload"
+            }
         },
         "map": {
-            "tilejson": "GET /map"
+            "description": "Map Vector Tile Endpoints",
+            "cmds": {
+                "tilejson": "GET /map"
+            }
         }
     },
     "schema": {
