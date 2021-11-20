@@ -17,18 +17,15 @@ const argv = require('minimist')(process.argv, {
 
 
 /**
- * @class OA
+ * @class
+ * @param {Object} api Global API Settings Object
+ * @param {string} api.url URL of OA API instance to interact with
+ * @param {string} api.username OpenAddresses Username
+ * @param {string} api.password OpenAddresses Password
+ * @param {string} api.secret OpenAddresses SharedSecret
+ * @param {string} api.token OpenAddresses Token
  */
 class OA {
-
-    /**
-     * @param {Object} api Global API Settings Object
-     * @param {string} api.url URL of OA API instance to interact with
-     * @param {string} api.username OpenAddresses Username
-     * @param {string} api.password OpenAddresses Password
-     * @param {string} api.secret OpenAddresses SharedSecret
-     * @param {string} api.token OpenAddresses Token
-     */
     constructor(api = {}) {
         this.url = api.url ? new URL(api.url).toString() : 'https://batch.openaddresses.io';
 
@@ -54,10 +51,10 @@ class OA {
         if (process.env.UPDATE) this.schema = await util.schema(this.url);
 
         if (!this.schema.cli[cmd]) throw new Error('Command Not Found');
-        if (!this.schema.cli[cmd][subcmd]) throw new Error('Subcommand Not Found');
-        if (!this.schema.schema[this.schema.cli[cmd][subcmd]]) throw new Error('API not found for Subcommand');
+        if (!this.schema.cli[cmd].cmds[subcmd]) throw new Error('Subcommand Not Found');
+        if (!this.schema.schema[this.schema.cli[cmd].cmds[subcmd]]) throw new Error('API not found for Subcommand');
 
-        let url = this.schema.cli[cmd][subcmd];
+        let url = this.schema.cli[cmd].cmds[subcmd];
         const matches = url.match(/:[a-z]+/g);
 
         if (matches) {
@@ -80,7 +77,7 @@ class OA {
             }
         }
 
-        const schema = this.schema.schema[this.schema.cli[cmd][subcmd]];
+        const schema = this.schema.schema[this.schema.cli[cmd].cmds[subcmd]];
 
         if (argv.cli && !argv.script && schema.body) {
             const body = (await util.schema(this.url, ...this.schema.cli[cmd][subcmd].split(' '))).body;
