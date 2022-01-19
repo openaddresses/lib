@@ -10,6 +10,9 @@
 
 ## Version History
 
+### v2.5.4
+- :arrow_up: Update ESLint & remove Babel now that ECMA v13 is supported
+
 ### v2.5.3
 
 - :tada: Add API descriptions to help documentation
