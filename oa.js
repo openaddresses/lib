@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+'use strict';
 
 const cli = require('./src/cli');
 const settings = require('./package.json');

@@ -1,3 +1,4 @@
+'use strict';
 const { promisify } = require('util');
 const request = promisify(require('request'));
 const fs = require('fs');

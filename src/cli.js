@@ -1,3 +1,4 @@
+'use strict';
 function help(argv, oa) {
     if (!argv._[2] && !argv._[3]) {
         console.log('');
