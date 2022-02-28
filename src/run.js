@@ -1,6 +1,7 @@
 'use strict';
 const { promisify } = require('util');
 const request = promisify(require('request'));
+const path = require('path');
 
 async function run(api, schema, url, payload) {
     const req = {
@@ -9,6 +10,10 @@ async function run(api, schema, url, payload) {
         method: url.split(' ')[0],
         headers: {}
     };
+
+    if (path.parse(String(req.url)).ext !== 'json') {
+        req.encoding = null;
+    }
 
     if (api.user.username && api.user.password) {
         req.auth = {
