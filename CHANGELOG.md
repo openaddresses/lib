@@ -10,6 +10,12 @@
 
 ## Version History
 
+### v2.6.0
+
+- :tada: Allow scripting params via the cli ie: --:job 123
+- :bug: Add support for binary output if an extension is present in URL
+- :rocket: Add support for validated data downloads
+
 ### v2.5.4
 - :arrow_up: Update ESLint & remove Babel now that ECMA v13 is supported
 
