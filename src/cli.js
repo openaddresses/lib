@@ -13,10 +13,10 @@ function help(argv, oa) {
         console.log('');
         console.log(`usage: oa.js ${argv._[2]} <subcommand> [--raw] [--script] [--version] [--help]`);
         console.log('');
-        console.log('desc:', oa.schema.cli[argv._[2]].description);
+        console.log('desc:', oa.schema.cli[argv._[2]] ? oa.schema.cli[argv._[2]].description : '');
         console.log('');
         console.log('<command>');
-        for (const s of Object.keys(oa.schema.cli[argv._[2]].cmds)) {
+        for (const s of Object.keys(oa.schema.cli[argv._[2]] ? oa.schema.cli[argv._[2]].cmds : {})) {
             console.log('    ' + s);
         }
         options();

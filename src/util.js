@@ -9,11 +9,11 @@ function local_schema() {
     return local;
 }
 
-async function schema(url, method, path) {
+async function schema(url, method, spath) {
     url = new URL('/api/schema', url);
 
     if (method) url.searchParams.append('method', method);
-    if (path) url.searchParams.append('url', path);
+    if (spath) url.searchParams.append('url', spath);
 
     const res = await request({
         json: true,
@@ -23,7 +23,7 @@ async function schema(url, method, path) {
 
     if (res.statusCode !== 200) throw new Error(res.body.message ? res.body.message : res.body);
 
-    if (!method && !path) {
+    if (!method && !spath) {
         const local = local_schema();
         local.schema = res.body;
 
