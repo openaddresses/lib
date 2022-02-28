@@ -142,9 +142,13 @@ async function runner(argv) {
     argv.cli = true;
 
     try {
-        const res = await oa.cmd(argv._[2], argv._[3]);
+        const res = await oa.cmd(argv._[2], argv._[3], argv);
 
-        console.log(JSON.stringify(res, null, 4));
+        if (res instanceof Buffer) {
+            process.stdout.write(res);
+        } else {
+            console.log(JSON.stringify(res, null, 4));
+        }
     } catch (err) {
         if (argv.trace) throw err;
 
