@@ -71,6 +71,7 @@
                 "delta": "GET /job/:job/delta",
                 "preview": "GET /job/:job/output/source.png",
                 "download": "GET /job/:job/output/source.geojson.gz",
+                "validated": "GET /job/:job/output/validated.geojson.gz",
                 "sample": "GET /job/:job/output/sample",
                 "cache": "GET /job/:job/output/cache.zip",
                 "log": "GET /job/:job/log",
