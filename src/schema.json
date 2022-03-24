@@ -96,7 +96,8 @@
         "map": {
             "description": "Map Vector Tile Endpoints",
             "cmds": {
-                "tilejson": "GET /map"
+                "tilejson": "GET /map",
+                "get": "GET /map/:mapid"
             }
         }
     },
