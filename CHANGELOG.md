@@ -10,6 +10,10 @@
 
 ## Version History
 
+### v2.7.0
+
+- :rocket: Add support for `GET /map/:mapid`
+
 ### v2.6.0
 
 - :tada: Allow scripting params via the cli ie: --:job 123
