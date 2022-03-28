@@ -97,6 +97,7 @@
             "description": "Map Vector Tile Endpoints",
             "cmds": {
                 "tilejson": "GET /map",
+                "features": "GET /map/features",
                 "get": "GET /map/:mapid"
             }
         }
@@ -353,6 +354,11 @@
             "res": true
         },
         "GET /map": {
+            "body": false,
+            "query": false,
+            "res": false
+        },
+        "GET /map/features": {
             "body": false,
             "query": false,
             "res": false
