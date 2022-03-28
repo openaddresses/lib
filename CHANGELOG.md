@@ -10,6 +10,10 @@
 
 ## Version History
 
+### v2.8.0
+
+- :rocket: Add support for `GET /map/features`
+
 ### v2.7.0
 
 - :rocket: Add support for `GET /map/:mapid`
