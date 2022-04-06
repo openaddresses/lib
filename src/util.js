@@ -1,15 +1,13 @@
-'use strict';
-const { promisify } = require('util');
-const request = promisify(require('request'));
-const fs = require('fs');
-const path = require('path');
+import fetch from 'node-fetch';
+import { readFile, writeFile } from 'fs/promises';
+import path from 'path';
 
-function local_schema() {
-    const local = JSON.parse(fs.readFileSync(path.resolve(__dirname, './schema.json')));
+export async function local_schema() {
+    const local = JSON.parse(await readFile(new URL('./schema.json', import.meta.url)));
     return local;
 }
 
-async function schema(url, method, spath) {
+export default async function schema(url, method, spath) {
     url = new URL('/api/schema', url);
 
     if (method) url.searchParams.append('method', method);
@@ -27,16 +25,10 @@ async function schema(url, method, spath) {
         const local = local_schema();
         local.schema = res.body;
 
-        fs.writeFileSync(path.resolve(__dirname, './schema.json'), JSON.stringify(local, null, 4));
+        await writeFile(path.resolve(__dirname, './schema.json'), JSON.stringify(local, null, 4));
 
         return local;
     } else {
         return res.body;
     }
 }
-
-module.exports = {
-    schema,
-    local_schema
-};
-

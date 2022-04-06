@@ -1,5 +1,4 @@
-'use strict';
-function help(argv, oa) {
+export default function help(argv, oa) {
     if (!argv._[2] && !argv._[3]) {
         console.log('');
         console.log('usage: oa.js <command> [--raw] [--script] [--version] [--help]');
@@ -38,7 +37,3 @@ function options() {
     console.log('    --help                      Print a help message');
     console.log('');
 }
-
-module.exports = {
-    help
-};

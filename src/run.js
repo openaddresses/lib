@@ -1,9 +1,8 @@
 'use strict';
-const { promisify } = require('util');
-const request = promisify(require('request'));
-const path = require('path');
+import fetch from 'node-fetch';
+import path from 'path';
 
-async function run(api, schema, url, payload) {
+export default async function run(api, schema, url, payload) {
     const req = {
         json: true,
         url: new URL('/api' + url.split(' ')[1], api.url + '/api'),
@@ -40,7 +39,7 @@ async function run(api, schema, url, payload) {
         }
     }
 
-    const res = await request(req);
+    const res = await fetch(req.url, req);
 
     if (res.statusCode !== 200) {
         if (typeof res.body === 'object') {
@@ -56,5 +55,3 @@ async function run(api, schema, url, payload) {
 
     return res.body;
 }
-
-module.exports = run;

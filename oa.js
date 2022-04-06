@@ -1,21 +1,6 @@
-#!/usr/bin/env node
-'use strict';
-
-const cli = require('./src/cli');
-const settings = require('./package.json');
-const util = require('./src/util');
-const run = require('./src/run');
-const inquire = require('inquirer');
-
-const argv = require('minimist')(process.argv, {
-    boolean: ['help', 'version', 'trace'],
-    string: ['url', 'username', 'password'],
-    alias: {
-        version: 'v',
-        help: '?'
-    }
-});
-
+import util from './src/util.js';
+import { local_schema } from './src/util.js';
+import run from './src/run.js';
 
 /**
  * @class
@@ -26,7 +11,7 @@ const argv = require('minimist')(process.argv, {
  * @param {string} api.secret OpenAddresses SharedSecret
  * @param {string} api.token OpenAddresses Token
  */
-class OA {
+export default class OA {
     constructor(api = {}) {
         this.url = api.url ? new URL(api.url).toString() : 'https://batch.openaddresses.io';
 
@@ -37,7 +22,7 @@ class OA {
             secret: api.secret ? api.secret : process.env.OA_SECRET
         };
 
-        this.schema = util.local_schema();
+        this.schema = local_schema();
     }
 
     /**
@@ -105,56 +90,5 @@ class OA {
         }
 
         return await run(this, schema, url, payload);
-    }
-}
-
-module.exports = OA;
-
-// Run in CLI mode
-if (require.main === module) {
-    runner(argv);
-}
-
-async function runner(argv) {
-    if (argv.version) {
-        console.log(`openaddresses/lib@${settings.version}`);
-        return;
-    }
-
-    const oa = new OA(argv);
-
-    if (argv.help || !argv._[2] || !argv._[3]) {
-        return cli.help(argv, oa);
-    }
-
-    if (!argv.script) {
-        const res = await inquire.prompt([{
-            name: 'url',
-            message: 'URL to connect to local or remote OA instance. Be sure to include the protocol and port number for local instances, e.g. \'http://localhost:8000\'',
-            type: 'string',
-            required: 'true',
-            default: oa.url
-        }]);
-
-        oa.url = new URL(res.url).toString();
-    }
-
-    argv.cli = true;
-
-    try {
-        const res = await oa.cmd(argv._[2], argv._[3], argv);
-
-        if (res instanceof Buffer) {
-            process.stdout.write(res);
-        } else {
-            console.log(JSON.stringify(res, null, 4));
-        }
-    } catch (err) {
-        if (argv.trace) throw err;
-
-        console.error();
-        console.error(err.message);
-        console.error();
-        process.exit(1);
     }
 }
