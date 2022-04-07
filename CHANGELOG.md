@@ -10,6 +10,10 @@
 
 ## Version History
 
+### v3.0.0
+
+- :rocket: Migrate library to ES Module
+
 ### v2.8.0
 
 - :rocket: Add support for `GET /map/features`
