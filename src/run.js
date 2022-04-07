@@ -62,7 +62,7 @@ export default async function run(api, schema, url, payload, opts = {}) {
                 throw new Error(res.status + ': ' + 'No .message');
             }
         } catch (err) {
-            const text = res.text();
+            const text = await res.text();
             throw new Error(res.status + ': ' + text);
         }
     }
