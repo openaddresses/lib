@@ -10,6 +10,10 @@
 
 ## Version History
 
+### v3.1.0
+
+- :tada: Add the ability to explicityly request a `Response`
+
 ### v3.0.0
 
 - :rocket: Migrate library to ES Module
