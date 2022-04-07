@@ -31,12 +31,14 @@ export default class OA {
     /**
      * Run an OpenAddresses Command
      *
-     * @param {String} cmd - Command to run
-     * @param {String} subcmd - Subcommand to run
+     * @param {String}  cmd - Command to run
+     * @param {String}  subcmd - Subcommand to run
      *
-     * @param {Object} defaults - Optional API Payload Defaults
+     * @param {Object}  defaults - Optional API Payload Defaults
+     * @param {Object}  opts - Options
+     * @param {Boolean} [opts.stream=false] - Return a streamable response
      */
-    async cmd(cmd, subcmd, defaults = {}) {
+    async cmd(cmd, subcmd, defaults = {}, opts = {}) {
         if (process.env.UPDATE) this.schema = await util.schema(this.url);
 
         if (!this.schema.cli[cmd]) throw new Error('Command Not Found');
@@ -96,6 +98,6 @@ export default class OA {
             }
         }
 
-        return await run(this, schema, url, payload);
+        return await run(this, schema, url, payload, opts);
     }
 }

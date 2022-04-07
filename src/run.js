@@ -2,7 +2,17 @@
 import fetch from 'node-fetch';
 import path from 'path';
 
-export default async function run(api, schema, url, payload) {
+/**
+ * Make a request to the API and return the response
+ *
+ * @param {OA}      api OA Instance
+ * @param {Object}  schema API Schema
+ * @param {String}  url URL
+ * @param {Object}  payload payload
+ * @param {Object}  opts - Options
+ * @param {Boolean} [opts.stream=false] - Return a streamable response
+ */
+export default async function run(api, schema, url, payload, opts = {}) {
     const req_url = new URL('/api' + url.split(' ')[1], api.url + '/api');
 
     const req = {
@@ -57,7 +67,7 @@ export default async function run(api, schema, url, payload) {
         }
     }
 
-    if (!!path.parse(req_url.pathname).ext && path.parse(req_url.pathname).ext !== 'json') {
+    if (opts.stream || (!!path.parse(req_url.pathname).ext && path.parse(req_url.pathname).ext !== 'json')) {
         return res.body;
     } else {
         const body = await res.json();
