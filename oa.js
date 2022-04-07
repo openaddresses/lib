@@ -61,7 +61,7 @@ export default class OA {
 
                     payload[match] = res[match];
                 } else {
-                    payload[match] = defaults[match]
+                    payload[match] = defaults[match];
                 }
 
                 if (!payload[match]) throw new Error(`"${match}" is required in body`);

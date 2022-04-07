@@ -1,0 +1,24 @@
+name: Tests
+
+on:
+    pull_request:
+        types:
+            - opened
+            - synchronize
+            - reopened
+            - ready_for_review
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        if: github.event.pull_request.draft == false
+        steps:
+            - uses: actions/checkout@v2
+              with:
+                  ref: ${{ github.event.pull_request.head.sha }}
+
+            - name: Docker Build Lib
+              run: docker build -t lib .
+
+            - name: Test
+              run: docker run lib

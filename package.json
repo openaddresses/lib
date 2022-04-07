@@ -7,7 +7,8 @@
     "author": "ingalls <nick@ingalls.ca>",
     "license": "MIT",
     "scripts": {
-        "lint": "eslint *.js src/**.js"
+        "lint": "eslint *.js src/**.js",
+        "test": "echo 'no tests'"
     },
     "bin": {
         "oa": "cli.js"

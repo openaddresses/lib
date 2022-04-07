@@ -55,8 +55,6 @@ export default async function run(api, schema, url, payload) {
             const text = res.text();
             throw new Error(res.status + ': ' + text);
         }
-
-        throw new Error(res.body);
     }
 
     if (!!path.parse(req_url.pathname).ext && path.parse(req_url.pathname).ext !== 'json') {
