@@ -1,6 +1,7 @@
 import util from './src/util.js';
 import { local_schema } from './src/util.js';
 import run from './src/run.js';
+import inquire from 'inquirer';
 
 /**
  * @class
@@ -23,6 +24,8 @@ export default class OA {
         };
 
         this.schema = local_schema();
+
+        this.argv = api;
     }
 
     /**
@@ -45,7 +48,7 @@ export default class OA {
 
         if (matches) {
             for (const match of matches) {
-                if (argv.cli && !argv.script && matches.length) {
+                if (this.argv.cli && !this.argv.script && matches.length) {
                     const res = await inquire.prompt([{
                         name: match,
                         message: `${match} to fetch`,
@@ -65,7 +68,7 @@ export default class OA {
 
         const schema = this.schema.schema[this.schema.cli[cmd].cmds[subcmd]];
 
-        if (argv.cli && !argv.script && schema.body) {
+        if (this.argv.cli && !this.argv.script && schema.body) {
             const body = (await util.schema(this.url, ...this.schema.cli[cmd][subcmd].split(' '))).body;
 
             for (const prop of Object.keys(body.properties)) {
