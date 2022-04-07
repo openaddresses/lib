@@ -10,6 +10,10 @@
 
 ## Version History
 
+### v3.1.1
+
+- :bug: await promise on text returns
+
 ### v3.1.0
 
 - :tada: Add the ability to explicityly request a `Response`
