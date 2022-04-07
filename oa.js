@@ -34,14 +34,16 @@ export default class OA {
      * @param {String} cmd - Command to run
      * @param {String} subcmd - Subcommand to run
      *
-     * @param {Object} payload - Optional API Payload
+     * @param {Object} defaults - Optional API Payload Defaults
      */
-    async cmd(cmd, subcmd, payload = {}) {
+    async cmd(cmd, subcmd, defaults = {}) {
         if (process.env.UPDATE) this.schema = await util.schema(this.url);
 
         if (!this.schema.cli[cmd]) throw new Error('Command Not Found');
         if (!this.schema.cli[cmd].cmds[subcmd]) throw new Error('Subcommand Not Found');
         if (!this.schema.schema[this.schema.cli[cmd].cmds[subcmd]]) throw new Error('API not found for Subcommand');
+
+        const payload = {};
 
         let url = this.schema.cli[cmd].cmds[subcmd];
         const matches = url.match(/:[a-z]+/g);
@@ -54,10 +56,12 @@ export default class OA {
                         message: `${match} to fetch`,
                         type: 'string',
                         required: 'true',
-                        default: payload[match]
+                        default: defaults[match]
                     }]);
 
                     payload[match] = res[match];
+                } else {
+                    payload[match] = defaults[match]
                 }
 
                 if (!payload[match]) throw new Error(`"${match}" is required in body`);
