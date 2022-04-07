@@ -1,21 +1,23 @@
 {
     "name": "@openaddresses/lib",
+    "type": "module",
     "version": "2.8.0",
     "main": "oa.js",
     "repository": "git@github.com:openaddresses/lib",
     "author": "ingalls <nick@ingalls.ca>",
     "license": "MIT",
     "scripts": {
-        "lint": "eslint *.js src/**.js"
+        "lint": "eslint *.js src/**.js",
+        "test": "echo 'no tests'"
     },
     "bin": {
-        "oa": "oa.js"
+        "oa": "cli.js"
     },
     "dependencies": {
         "asciichart": "^1.5.25",
         "inquirer": "^8.0.0",
         "minimist": "^1.2.5",
-        "request": "^2.88.2"
+        "node-fetch": "^3.2.3"
     },
     "devDependencies": {
         "eslint": "^8.2.0",

@@ -1,17 +1,17 @@
-'use strict';
-const { promisify } = require('util');
-const request = promisify(require('request'));
-const path = require('path');
 
-async function run(api, schema, url, payload) {
+import fetch from 'node-fetch';
+import path from 'path';
+
+export default async function run(api, schema, url, payload) {
+    const req_url = new URL('/api' + url.split(' ')[1], api.url + '/api');
+
     const req = {
         json: true,
-        url: new URL('/api' + url.split(' ')[1], api.url + '/api'),
         method: url.split(' ')[0],
         headers: {}
     };
 
-    if (path.parse(String(req.url)).ext !== 'json') {
+    if (!!path.parse(req_url.pathname).ext && path.parse(req_url.pathname).ext !== 'json') {
         req.encoding = null;
     }
 
@@ -36,25 +36,31 @@ async function run(api, schema, url, payload) {
         req.body = payload;
     } else if (schema.query) {
         for (const key of Object.keys(payload)) {
-            req.url.searchParams.append(key, payload[key]);
+            req_url.searchParams.append(key, payload[key]);
         }
     }
 
-    const res = await request(req);
+    const res = await fetch(req_url, req);
 
-    if (res.statusCode !== 200) {
-        if (typeof res.body === 'object') {
-            if (res.body.message) {
-                throw new Error(res.statusCode + ': ' + res.body.message);
+    if (res.status !== 200) {
+        try {
+            const body = await res.json();
+
+            if (body && body.message) {
+                throw new Error(res.status + ': ' + body.message);
             } else {
-                throw new Error(res.statusCode + ': ' + 'No .message');
+                throw new Error(res.status + ': ' + 'No .message');
             }
+        } catch (err) {
+            const text = res.text();
+            throw new Error(res.status + ': ' + text);
         }
-
-        throw new Error(res.body);
     }
 
-    return res.body;
+    if (!!path.parse(req_url.pathname).ext && path.parse(req_url.pathname).ext !== 'json') {
+        return res.body;
+    } else {
+        const body = await res.json();
+        return body;
+    }
 }
-
-module.exports = run;

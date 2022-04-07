@@ -1,21 +1,7 @@
-#!/usr/bin/env node
-'use strict';
-
-const cli = require('./src/cli');
-const settings = require('./package.json');
-const util = require('./src/util');
-const run = require('./src/run');
-const inquire = require('inquirer');
-
-const argv = require('minimist')(process.argv, {
-    boolean: ['help', 'version', 'trace'],
-    string: ['url', 'username', 'password'],
-    alias: {
-        version: 'v',
-        help: '?'
-    }
-});
-
+import util from './src/util.js';
+import { local_schema } from './src/util.js';
+import run from './src/run.js';
+import inquire from 'inquirer';
 
 /**
  * @class
@@ -26,7 +12,7 @@ const argv = require('minimist')(process.argv, {
  * @param {string} api.secret OpenAddresses SharedSecret
  * @param {string} api.token OpenAddresses Token
  */
-class OA {
+export default class OA {
     constructor(api = {}) {
         this.url = api.url ? new URL(api.url).toString() : 'https://batch.openaddresses.io';
 
@@ -37,7 +23,9 @@ class OA {
             secret: api.secret ? api.secret : process.env.OA_SECRET
         };
 
-        this.schema = util.local_schema();
+        this.schema = local_schema();
+
+        this.argv = api;
     }
 
     /**
@@ -46,30 +34,34 @@ class OA {
      * @param {String} cmd - Command to run
      * @param {String} subcmd - Subcommand to run
      *
-     * @param {Object} payload - Optional API Payload
+     * @param {Object} defaults - Optional API Payload Defaults
      */
-    async cmd(cmd, subcmd, payload = {}) {
+    async cmd(cmd, subcmd, defaults = {}) {
         if (process.env.UPDATE) this.schema = await util.schema(this.url);
 
         if (!this.schema.cli[cmd]) throw new Error('Command Not Found');
         if (!this.schema.cli[cmd].cmds[subcmd]) throw new Error('Subcommand Not Found');
         if (!this.schema.schema[this.schema.cli[cmd].cmds[subcmd]]) throw new Error('API not found for Subcommand');
 
+        const payload = {};
+
         let url = this.schema.cli[cmd].cmds[subcmd];
         const matches = url.match(/:[a-z]+/g);
 
         if (matches) {
             for (const match of matches) {
-                if (argv.cli && !argv.script && matches.length) {
+                if (this.argv.cli && !this.argv.script && matches.length) {
                     const res = await inquire.prompt([{
                         name: match,
                         message: `${match} to fetch`,
                         type: 'string',
                         required: 'true',
-                        default: payload[match]
+                        default: defaults[match]
                     }]);
 
                     payload[match] = res[match];
+                } else {
+                    payload[match] = defaults[match];
                 }
 
                 if (!payload[match]) throw new Error(`"${match}" is required in body`);
@@ -80,7 +72,7 @@ class OA {
 
         const schema = this.schema.schema[this.schema.cli[cmd].cmds[subcmd]];
 
-        if (argv.cli && !argv.script && schema.body) {
+        if (this.argv.cli && !this.argv.script && schema.body) {
             const body = (await util.schema(this.url, ...this.schema.cli[cmd][subcmd].split(' '))).body;
 
             for (const prop of Object.keys(body.properties)) {
@@ -105,56 +97,5 @@ class OA {
         }
 
         return await run(this, schema, url, payload);
-    }
-}
-
-module.exports = OA;
-
-// Run in CLI mode
-if (require.main === module) {
-    runner(argv);
-}
-
-async function runner(argv) {
-    if (argv.version) {
-        console.log(`openaddresses/lib@${settings.version}`);
-        return;
-    }
-
-    const oa = new OA(argv);
-
-    if (argv.help || !argv._[2] || !argv._[3]) {
-        return cli.help(argv, oa);
-    }
-
-    if (!argv.script) {
-        const res = await inquire.prompt([{
-            name: 'url',
-            message: 'URL to connect to local or remote OA instance. Be sure to include the protocol and port number for local instances, e.g. \'http://localhost:8000\'',
-            type: 'string',
-            required: 'true',
-            default: oa.url
-        }]);
-
-        oa.url = new URL(res.url).toString();
-    }
-
-    argv.cli = true;
-
-    try {
-        const res = await oa.cmd(argv._[2], argv._[3], argv);
-
-        if (res instanceof Buffer) {
-            process.stdout.write(res);
-        } else {
-            console.log(JSON.stringify(res, null, 4));
-        }
-    } catch (err) {
-        if (argv.trace) throw err;
-
-        console.error();
-        console.error(err.message);
-        console.error();
-        process.exit(1);
     }
 }
