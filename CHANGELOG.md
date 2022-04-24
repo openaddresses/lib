@@ -10,6 +10,10 @@
 
 ## Version History
 
+### v4.2.0
+
+- :bug: Fix query payload
+
 ### v4.1.0
 
 - :bug: Fix body payload
