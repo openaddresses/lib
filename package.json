@@ -6,6 +6,9 @@
     "repository": "git@github.com:openaddresses/lib",
     "author": "ingalls <nick@ingalls.ca>",
     "license": "MIT",
+    "engines": {
+        "node": ">= 18"
+    },
     "scripts": {
         "lint": "eslint *.js src/**.js",
         "test": "echo 'no tests'"
@@ -16,8 +19,7 @@
     "dependencies": {
         "asciichart": "^1.5.25",
         "inquirer": "^8.0.0",
-        "minimist": "^1.2.5",
-        "node-fetch": "^3.2.3"
+        "minimist": "^1.2.5"
     },
     "devDependencies": {
         "eslint": "^8.2.0",

@@ -1,5 +1,3 @@
-
-import fetch from 'node-fetch';
 import path from 'path';
 
 /**
@@ -52,7 +50,7 @@ export default async function run(api, schema, url, payload, opts = {}) {
 
     const res = await fetch(req_url, req);
 
-    if (res.status !== 200) {
+    if (!res.ok) {
         try {
             const body = await res.json();
 
