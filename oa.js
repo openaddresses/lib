@@ -101,6 +101,15 @@ export default class OA {
             }
         }
 
+        if (schema.query) {
+            const query = (await util(this.url, ...this.schema.cli[cmd].cmds[subcmd].split(' '))).query;
+            for (const prop of Object.keys(query.properties)) {
+                if (defaults[prop] !== undefined) {
+                    payload[prop] = defaults[prop];
+                }
+            }
+        }
+
         return await run(this, schema, url, payload, opts);
     }
 }
