@@ -1,4 +1,3 @@
-import fetch from 'node-fetch';
 import { writeFile } from 'fs/promises';
 import { readFileSync } from 'fs';
 import path from 'path';
@@ -15,20 +14,20 @@ export default async function schema(url, method, spath) {
     if (spath) url.searchParams.append('url', spath);
 
     const res = await fetch(url, {
-        json: true,
         method: 'GET'
     });
 
-    if (res.statusCode !== 200) throw new Error(res.body.message ? res.body.message : res.body);
+    if (!res.ok) throw new Error('Failed to fetch schema');
 
+    const body = await res.json();
     if (!method && !spath) {
         const local = local_schema();
-        local.schema = res.body;
+        local.schema = body;
 
         await writeFile(path.resolve(__dirname, './schema.json'), JSON.stringify(local, null, 4));
 
         return local;
     } else {
-        return res.body;
+        return body;
     }
 }

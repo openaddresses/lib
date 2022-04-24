@@ -10,6 +10,10 @@
 
 ## Version History
 
+### v4.1.0
+
+- :bug: Fix body payload
+
 ### v4.0.0
 
 - :rocket: Require node >= 18 & Use internal `fetch`

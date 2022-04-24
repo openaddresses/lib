@@ -14,7 +14,6 @@ export default async function run(api, schema, url, payload, opts = {}) {
     const req_url = new URL('/api' + url.split(' ')[1], api.url + '/api');
 
     const req = {
-        json: true,
         method: url.split(' ')[0],
         headers: {}
     };
@@ -23,26 +22,26 @@ export default async function run(api, schema, url, payload, opts = {}) {
         req.encoding = null;
     }
 
-    if (api.user.username && api.user.password) {
-        req.auth = {
-            'user': api.user.username,
-            'pass': api.user.password
-        };
-    }
-
     if (api.user.token) {
-        req.auth = {
-            bearer: api.user.token
-        };
-    }
-
-    if (api.user.secret) {
+        req.headers['Authorization'] = `Bearer ${api.user.token}`;
+    } else if (api.user.secret) {
         req.headers['shared-secret'] = api.user.secret;
+    } else if (req.auth && req.auth.username && req.auth.password) {
+        req.headers['Authorization'] = 'Basic ' + btoa(api.user.username + ':' + api.user.password);
     }
 
     if (schema.body) {
-        req.body = payload;
-    } else if (schema.query) {
+        if (typeof payload === 'object') {
+            req.body = JSON.stringify(payload);
+            req.headers['Content-Type'] = 'application/json';
+        } else {
+            req.body = payload;
+        }
+    } else {
+        delete req.body;
+    }
+
+    if (schema.query) {
         for (const key of Object.keys(payload)) {
             req_url.searchParams.append(key, payload[key]);
         }
@@ -51,17 +50,18 @@ export default async function run(api, schema, url, payload, opts = {}) {
     const res = await fetch(req_url, req);
 
     if (!res.ok) {
-        try {
-            const body = await res.json();
+        let body;
 
-            if (body && body.message) {
-                throw new Error(res.status + ': ' + body.message);
-            } else {
-                throw new Error(res.status + ': ' + 'No .message');
-            }
+        try {
+            body = await res.json();
         } catch (err) {
-            const text = await res.text();
-            throw new Error(res.status + ': ' + text);
+            throw new Error(res.status + ': ' + await res.text());
+        }
+
+        if (body && body.message) {
+            throw new Error(res.status + ': ' + body.message);
+        } else {
+            throw new Error(res.status + ': ' + 'No .message');
         }
     }
 

@@ -39,7 +39,7 @@ export default class OA {
      * @param {Boolean} [opts.stream=false] - Return a streamable response
      */
     async cmd(cmd, subcmd, defaults = {}, opts = {}) {
-        if (process.env.UPDATE) this.schema = await util.schema(this.url);
+        if (process.env.UPDATE) this.schema = await util(this.url);
 
         if (!this.schema.cli[cmd]) throw new Error('Command Not Found');
         if (!this.schema.cli[cmd].cmds[subcmd]) throw new Error('Subcommand Not Found');
@@ -74,27 +74,30 @@ export default class OA {
 
         const schema = this.schema.schema[this.schema.cli[cmd].cmds[subcmd]];
 
-        if (this.argv.cli && !this.argv.script && schema.body) {
-            const body = (await util.schema(this.url, ...this.schema.cli[cmd][subcmd].split(' '))).body;
+        if (schema.body) {
+            const body = (await util(this.url, ...this.schema.cli[cmd].cmds[subcmd].split(' '))).body;
 
             for (const prop of Object.keys(body.properties)) {
                 const p = body.properties[prop];
 
-                const ask = {
-                    name: prop,
-                    message: `${prop} to populate`,
-                    type: p.type,
-                    required: 'true'
-                };
+                if (this.argv.cli && !this.argv.script) {
+                    const ask = {
+                        name: prop,
+                        message: `${prop} to populate`,
+                        type: p.type,
+                        required: 'true'
+                    };
 
-                if (p.enum) {
-                    ask.type = 'list';
-                    ask.choices = p.enum;
+                    if (p.enum) {
+                        ask.type = 'list';
+                        ask.choices = p.enum;
+                    }
+
+                    const res = await inquire.prompt([ask]);
+                    payload[prop] = res[prop];
+                } else if (defaults[prop] !== undefined) {
+                    payload[prop] = defaults[prop];
                 }
-
-                const res = await inquire.prompt([ask]);
-                payload[prop] = res[prop];
-
             }
         }
 
