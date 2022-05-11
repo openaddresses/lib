@@ -20,5 +20,5 @@ jobs:
 
             - name: npm publish
               run: npm publish
-              end:
+              env:
                 NPM_TOKEN: {{ secrets.NPM_TOKEN }}
