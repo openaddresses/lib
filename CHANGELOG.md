@@ -10,6 +10,10 @@
 
 ## Version History
 
+### v4.3.0
+
+- :rocket: Automate NPM Releases
+
 ### v4.2.0
 
 - :bug: Fix query payload
