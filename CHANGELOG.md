@@ -10,7 +10,7 @@
 
 ## Version History
 
-### v4.3.0
+### v4.4.0
 
 - :rocket: Automate NPM Releases
 
