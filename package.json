@@ -1,7 +1,7 @@
 {
     "name": "@openaddresses/lib",
     "type": "module",
-    "version": "4.2.7",
+    "version": "4.2.8",
     "main": "oa.js",
     "repository": "git@github.com:openaddresses/lib",
     "author": "ingalls <nick@ingalls.ca>",
