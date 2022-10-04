@@ -18,7 +18,7 @@
     },
     "dependencies": {
         "asciichart": "^1.5.25",
-        "inquirer": "^8.0.0",
+        "inquirer": "^9.0.0",
         "minimist": "^1.2.5"
     },
     "devDependencies": {
