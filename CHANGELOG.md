@@ -10,6 +10,10 @@
 
 ## Version History
 
+### v2.4.1
+
+- :arrow_up: General Dep Update
+
 ### v4.4.0
 
 - :rocket: Automate NPM Releases
