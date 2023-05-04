@@ -10,6 +10,10 @@
 
 ## Version History
 
+### v2.4.2
+
+- :rocket: Include an error handler if the `.json` call has already consumed the body and `.text` cannot be called
+
 ### v2.4.1
 
 - :arrow_up: General Dep Update

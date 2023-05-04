@@ -54,11 +54,11 @@ export default async function run(api, schema, url, payload, opts = {}) {
 
         try {
             body = await res.json();
-        } catch (err) {
+        } catch (prime_err) {
             try {
-                throw new Error(res.status + ': ' + await res.text());
-            } catch (err) {
-                throw new Error(res.status + ': ' + err.message);
+                throw new Error(res.status + ': ' + await res.text() + ' - ' + prime_err.message);
+            } catch (sec_err) {
+                throw new Error(res.status + ': ' + prime_err.message + ' - ' + sec_err);
             }
         }
 
