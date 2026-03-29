@@ -58,7 +58,8 @@
                 "update": "PATCH /run/:run",
                 "get": "GET /run/:run",
                 "jobs": "GET /run/:run/jobs",
-                "jobs_count": "GET /run/:run/count"
+                "jobs_count": "GET /run/:run/count",
+                "delete": "DELETE /run/:run"
             }
         },
         "job": {
@@ -75,7 +76,9 @@
                 "sample": "GET /job/:job/output/sample",
                 "cache": "GET /job/:job/output/cache.zip",
                 "log": "GET /job/:job/log",
-                "raw": "GET /job/:job/raw"
+                "raw": "GET /job/:job/raw",
+                "delete": "DELETE /job/:job",
+                "orphaned": "GET /job/orphaned"
             }
         },
         "joberror": {
@@ -303,6 +306,16 @@
             "query": false,
             "res": true
         },
+        "DELETE /job/:job": {
+            "body": false,
+            "query": false,
+            "res": true
+        },
+        "GET /job/orphaned": {
+            "body": false,
+            "query": true,
+            "res": true
+        },
         "GET /level": {
             "body": false,
             "query": true,
@@ -414,6 +427,11 @@
             "res": true
         },
         "GET /run/:run/jobs": {
+            "body": false,
+            "query": false,
+            "res": true
+        },
+        "DELETE /run/:run": {
             "body": false,
             "query": false,
             "res": true
